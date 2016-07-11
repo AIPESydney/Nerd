@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nerd.Api", "Nerd.Api\Nerd.Api.csproj", "{9AE894D5-7201-478E-911A-D55E32A31776}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nerd.Data", "Nerd.Data\Nerd.Data.csproj", "{67518351-307A-4245-8860-61653470726C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nerd.Mobile", "Nerd.Mobile\Nerd.Mobile.csproj", "{5409B7CB-E0D2-47EF-A396-C92446579A48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AE894D5-7201-478E-911A-D55E32A31776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE894D5-7201-478E-911A-D55E32A31776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE894D5-7201-478E-911A-D55E32A31776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE894D5-7201-478E-911A-D55E32A31776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67518351-307A-4245-8860-61653470726C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67518351-307A-4245-8860-61653470726C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67518351-307A-4245-8860-61653470726C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67518351-307A-4245-8860-61653470726C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5409B7CB-E0D2-47EF-A396-C92446579A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5409B7CB-E0D2-47EF-A396-C92446579A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5409B7CB-E0D2-47EF-A396-C92446579A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5409B7CB-E0D2-47EF-A396-C92446579A48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
