@@ -1,0 +1,12 @@
+packages/
+Nerd.Mobile/bin/
+Nerd.Mobile/obj/
+Nerd.Api/bin/
+Nerd.Api/obj/
+Nerd.Data/bin/
+Nerd.Data/obj/
+*exe
+*dll
+*.suo
+*.pdb
+Nerd.Mobile/Nerd.Mobile.csproj.user
