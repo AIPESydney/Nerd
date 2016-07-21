@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nerd.Data
 {
-    public class Class1
+    public class _Class1 
     {
     }
 }
