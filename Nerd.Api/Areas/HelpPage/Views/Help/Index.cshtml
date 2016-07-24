@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "ASP.NET Web API Help Page";
+    ViewBag.Title = "Project Nerd API Help Page";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -25,7 +25,8 @@
         <div class="content-wrapper">
             <h2>Introduction</h2>
             <p>
-                Provide a general description of your APIs here.
+                Nerd Api is the backend for Nerd mobile app. The features will be grouped into controllers such as account controller, eventcontroller etc.
+                Each controller will user GET, POST , PATCH , DELETE operations for select, insert, update and delete operations respectively.
             </p>
         </div>
     </section>
