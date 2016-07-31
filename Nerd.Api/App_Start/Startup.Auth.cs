@@ -40,7 +40,7 @@ namespace Nerd.Api
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
-            PublicClientId = "clientid3ed54ggm5f4l";
+            PublicClientId = "nerd.api.q12w3e4t554";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),

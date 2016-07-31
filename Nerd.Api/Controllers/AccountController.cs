@@ -353,6 +353,38 @@ namespace Nerd.Api.Controllers
         }
 
 
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ObtainLocalAccessToken")]
+        public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken, string externalAccessTokenSecret)
+        {
+
+            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
+            {
+                return BadRequest("Provider or external access token is not sent");
+            }
+
+            var verifiedAccessToken = await VerifyExternalAccessToken(provider, externalAccessToken, externalAccessTokenSecret);
+            if (verifiedAccessToken == null)
+            {
+                return BadRequest("Invalid Provider or External Access Token");
+            }
+
+            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.UserId));
+
+            bool hasRegistered = user != null;
+
+            if (!hasRegistered)
+            {
+                return BadRequest("External user is not registered");
+            }
+            //generate access token response
+            var accessTokenResponse = await GenerateLocalAccessTokenResponse(provider, user.UserName, user.Email, user);
+            return Ok(accessTokenResponse);
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
