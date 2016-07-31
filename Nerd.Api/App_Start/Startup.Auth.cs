@@ -19,8 +19,9 @@ namespace Nerd.Api
 
         public static readonly string OAuthFacebookAppId = ConfigurationManager.AppSettings["FacebookAppId"];
         public static readonly string OAuthFacebookSecret = ConfigurationManager.AppSettings["FacebookSecret"];
-                public static readonly string OAuthTwitterConsumerKey = ConfigurationManager.AppSettings["Twitter_ConsumerKey"];
+        public static readonly string OAuthTwitterConsumerKey = ConfigurationManager.AppSettings["Twitter_ConsumerKey"];
         public static readonly string OAuthTwitterConsumerSecret = ConfigurationManager.AppSettings["Twitter_ConsumerSecret"];
+        public static readonly string OAuthGoogleClientId = ConfigurationManager.AppSettings["Google_ClientId"];
         public static string PublicClientId { get; private set; }
 
 

@@ -301,6 +301,7 @@
     <Compile Include="Providers\FacebookAuthenticationProvider.cs" />
     <Compile Include="Providers\GoogleAuthenticationProvider.cs" />
     <Compile Include="Providers\TwitterAuthenticationProvider.cs" />
+    <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -19,9 +19,6 @@ namespace Nerd.Api.Providers
             {
                 context.Identity.AddClaim(new Claim(ClaimTypes.Name, context.Name));
             }
-
-
-
             return Task.FromResult<object>(null);
         }
     }
