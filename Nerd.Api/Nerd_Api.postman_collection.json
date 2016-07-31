@@ -1,0 +1,52 @@
+{
+	"id": "b223dd63-05eb-2cb7-dede-1dee15fba7cd",
+	"name": "Nerd Api",
+	"description": "",
+	"order": [
+		"75bdb228-570b-a23f-78e4-835cae4a321b",
+		"ed92e45e-c5ce-b98d-cebb-08f4d4fcec7e"
+	],
+	"folders": [],
+	"timestamp": 1469836793770,
+	"owner": "26114",
+	"public": false,
+	"published": false,
+	"requests": [
+		{
+			"id": "75bdb228-570b-a23f-78e4-835cae4a321b",
+			"headers": "X-HTTP-Security-Custom-Header: {{api_key_value}}\nContent-Type: application/json; charset=utf-8\n",
+			"url": "{{url}}/account/register",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1469938401468,
+			"name": "Register",
+			"description": "Registers a user using basic authentication",
+			"collectionId": "b223dd63-05eb-2cb7-dede-1dee15fba7cd",
+			"rawModeData": "{\r\n  \"Email\": \"test@hotmail.com\",\r\n  \"Password\": \"P@ssw0rd123\",\r\n  \"ConfirmPassword\": \"P@ssw0rd123\",\r\n  \"UserName\": \"test@hotmail.com\"\r\n}"
+		},
+		{
+			"id": "ed92e45e-c5ce-b98d-cebb-08f4d4fcec7e",
+			"headers": "Authorization: Basic {{basic_auth}}\nX-HTTP-Security-Custom-Header: {{api_key_value}}\n",
+			"url": "{{sso_url}}",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "tests[\"Returns success\"] = responseCode.code === 200;\n\nresponse = $.parseJSON(responseBody);\n\ntests[\"Returns valid token\"] = response.hasOwnProperty('access_token');\n\npostman.setEnvironmentVariable('access_token', response.access_token);\n",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1463608356598,
+			"name": "OAuth Client Credentials Grant ",
+			"description": "Obtain an access token from a client credentials grant.",
+			"collectionId": "b223dd63-05eb-2cb7-dede-1dee15fba7cd",
+			"rawModeData": "username=burakiskender@hotmail.com&password=P@ssw0rd&grant_type=password"
+		}
+	]
+}
