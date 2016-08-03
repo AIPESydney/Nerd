@@ -400,6 +400,80 @@ namespace Nerd.Api.Controllers
             base.Dispose(disposing);
         }
 
+
+
+        #region TwoFactorAuthentication
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> EnableTwoFactorAuthentication()
+        {
+            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+        //
+        // POST: /Manage/DisableTwoFactorAuthentication
+        [HttpPost, Authorize]
+        public async Task<IHttpActionResult> DisableTwoFactorAuthentication()
+        {
+            await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IHttpActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            // Generate the token and send it
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+            if (UserManager.SmsService != null)
+            {
+                var message = new IdentityMessage
+                {
+                    Destination = model.Number,
+                    Body = "Your security code is: " + code
+                };
+                await UserManager.SmsService.SendAsync(message);
+            }
+            return Ok();
+        }
+
+        [HttpPost]
+        [Authorize]
+        //public async Task<IHttpActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+        //    if (result.Succeeded)
+        //    {
+        //        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        //        if (user != null)
+        //        {
+        //            await AuthenticationManager.SignIn(user);
+        //        }
+        //        return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+        //    }
+        //    // If we got this far, something failed, redisplay form
+        //    ModelState.AddModelError("", "Failed to verify phone");
+        //    return View(model);
+        //}
+        #endregion
+
         #region Helpers
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
