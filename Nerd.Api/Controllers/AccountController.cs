@@ -34,6 +34,8 @@ namespace Nerd.Api.Controllers
     public class AccountController : ApiController
     {
         private ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
+
         private const string LocalLoginProvider = "Local";
 
         public ApplicationUserManager UserManager
@@ -59,7 +61,17 @@ namespace Nerd.Api.Controllers
         {
             get { return Request.GetOwinContext().Authentication; }
         }
-
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? Request.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
         //public AccountController(ApplicationUserManager userManager
         //   )
         //{
@@ -402,7 +414,7 @@ namespace Nerd.Api.Controllers
 
 
 
-        #region TwoFactorAuthentication
+        #region TwoFactorAuthentication SMS
         [HttpPost, Authorize]
         public async Task<IHttpActionResult> EnableTwoFactorAuthentication()
         {
@@ -452,26 +464,74 @@ namespace Nerd.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        //public async Task<IHttpActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
-        //    if (result.Succeeded)
-        //    {
-        //        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-        //        if (user != null)
-        //        {
-        //            await AuthenticationManager.SignIn(user);
-        //        }
-        //        return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
-        //    }
-        //    // If we got this far, something failed, redisplay form
-        //    ModelState.AddModelError("", "Failed to verify phone");
-        //    return View(model);
-        //}
+        public async Task<IHttpActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                       OAuthDefaults.AuthenticationType);
+                    ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                        CookieAuthenticationDefaults.AuthenticationType);
+
+                    AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                    AuthenticationManager.SignIn(properties, oAuthIdentity, cookieIdentity);
+                }
+                return Ok();
+            }
+            return BadRequest("Failed to verify phone");
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> SendCode(SendCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            // Generate the token and send it
+            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
+            {
+                return BadRequest("Error");
+            }
+            return Ok();
+        }
+        // POST: /Account/VerifyCode
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IHttpActionResult> VerifyCode(VerifyCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            // The following code protects for brute force attacks against the two factor codes. 
+            // If a user enters incorrect codes for a specified amount of time then the user account 
+            // will be locked out for a specified amount of time. 
+            // You can configure the account lockout settings in IdentityConfig
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return Ok();
+                case SignInStatus.LockedOut:
+                    return BadRequest("Lockout");
+                case SignInStatus.Failure:
+                default:
+                    return BadRequest("Invalid code.");
+            }
+        }
         #endregion
 
         #region Helpers
