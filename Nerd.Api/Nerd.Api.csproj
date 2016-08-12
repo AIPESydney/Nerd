@@ -326,6 +326,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Migrations\201607210952419_InitialCreate.cs" />
     <Compile Include="Migrations\201607210952419_InitialCreate.Designer.cs">
       <DependentUpon>201607210952419_InitialCreate.cs</DependentUpon>
@@ -344,6 +345,8 @@
     <Compile Include="Providers\FacebookAuthenticationProvider.cs" />
     <Compile Include="Providers\GoogleAuthenticationProvider.cs" />
     <Compile Include="Providers\TwitterAuthenticationProvider.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -422,6 +425,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nerd.Data\Nerd.Data.csproj">
+      <Project>{8dee08e1-e1d0-443d-95dd-de9bdedb5672}</Project>
+      <Name>Nerd.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
