@@ -11,8 +11,6 @@ namespace Nerd.Api.Repository
 
         private readonly NerdEntities _context = new NerdEntities();
 
-
-
         private GenericRepository<User> _userRepository;
         public GenericRepository<User> UserRepository
         {
@@ -27,17 +25,30 @@ namespace Nerd.Api.Repository
         }
 
 
+        private GenericRepository<Comment> _commentsRepository;
+        public GenericRepository<Comment> CommentsRepository
+        {
+            get
+            {
+                if (this._commentsRepository == null)
+                {
+                    this._commentsRepository = new GenericRepository<Comment>(_context);
+                }
+                return _commentsRepository;
+            }
+        }
+
+
+
+
+
         public void Save()
         {
 
             using (var context= new NerdEntities() )
             {
                 var user = new User();
-                
-                
-                
             }
-
             _context.SaveChanges();
         }
 
