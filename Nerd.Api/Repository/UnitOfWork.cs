@@ -29,6 +29,15 @@ namespace Nerd.Api.Repository
 
         public void Save()
         {
+
+            using (var context= new NerdEntities() )
+            {
+                var user = new User();
+                
+                
+                
+            }
+
             _context.SaveChanges();
         }
 
