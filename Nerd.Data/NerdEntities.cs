@@ -28,7 +28,9 @@ namespace Nerd.Data
 
          public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
-    }
+
+        public virtual DbSet<Post> Post { get; set; }
+}
 
     
     public class User
@@ -56,6 +58,23 @@ namespace Nerd.Data
         public int UserId { get; set; }
         public  string Description { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int PostId { get; set; }
+        public virtual Post Post { get; set; }
+    }
+
+
+    public class Post {
+        [Key]
+        public int Id { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+    }
+
+
+    public class Event {
+        [Key]
+        public int Id { get; set; }
+
+
     }
 
 

@@ -13,6 +13,7 @@ namespace Nerd.Api.App_Start
     using Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Repository;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -66,8 +67,10 @@ namespace Nerd.Api.App_Start
         private static void RegisterServices(IKernel kernel)
         {
 
+            kernel.Bind<UnitOfWork>().To<UnitOfWork>().InRequestScope();
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>().InRequestScope();
             kernel.Bind<ApplicationUserManager>().To<ApplicationUserManager>().InRequestScope();
+            
         }        
     }
 }
