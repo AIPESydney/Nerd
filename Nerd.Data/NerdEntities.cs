@@ -39,13 +39,15 @@ namespace Nerd.Data
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public string UserName{ get; set; }
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
+        public string Location { get; set; }
+        public DateTime? DateofBirth { get; set; }
+        public string Country { get; set; }
         public string AuthenticationMethod { get; set; }
         public ICollection<Comment> Comments { get; set; }
-
-
-
+        public ICollection<Post> Posts{ get; set; }
     }
 
 
@@ -60,8 +62,9 @@ namespace Nerd.Data
         public DateTime CreatedDate { get; set; }
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
-    }
 
+
+    }
 
     public class Post {
         [Key]

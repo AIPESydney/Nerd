@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
+using Nerd.Api.Models;
 using Nerd.Api.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 
@@ -39,6 +41,29 @@ namespace Nerd.Api.Controllers
             {
                 _userManager = value;
             }
+        }
+
+
+        [HttpGet]
+        public async Task<IHttpActionResult> Get(int userId)
+        {
+            await Task.Delay(1);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> Post(RegisterBindingModel model)
+        {
+            await Task.Delay(1);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUsers()
+        {
+            await Task.Delay(1);
+            var users = _unitOfWork.UserRepository.GetAll();
+            return Ok(users);
         }
     }
 }
