@@ -22,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Configuration;
 using System.Text;
+using Nerd.Api.Repository;
 
 namespace Nerd.Api.Controllers
 {
@@ -35,7 +36,7 @@ namespace Nerd.Api.Controllers
     {
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
-
+        private readonly UnitOfWork _unitOfWork;
         private const string LocalLoginProvider = "Local";
 
         public ApplicationUserManager UserManager
@@ -78,7 +79,9 @@ namespace Nerd.Api.Controllers
         //    UserManager = userManager;
 
         //}
-        public AccountController() { }
+        public AccountController() {
+            _unitOfWork = new UnitOfWork();
+        }
 
 
         // POST api/Account/Logout
@@ -155,6 +158,15 @@ namespace Nerd.Api.Controllers
                 return GetErrorResult(result);
             }
             await UserManager.AddToRoleAsync(user.Id, "Users");
+
+            var userdata = new Nerd.Data.User
+            {
+                AspNetUserId = user.Id,
+                CreatedDate = DateTime.Now
+            };
+
+            await _unitOfWork.UserRepository.InsertAsync(userdata);
+
             return Ok();
         }
 

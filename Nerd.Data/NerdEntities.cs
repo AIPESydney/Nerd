@@ -20,7 +20,7 @@ namespace Nerd.Data
             : base("name=NerdDatabase")
         {
 
-            this.Configuration.AutoDetectChangesEnabled = true;
+            this.Configuration.AutoDetectChangesEnabled = false;
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -32,12 +32,12 @@ namespace Nerd.Data
         public virtual DbSet<Post> Post { get; set; }
 }
 
-    
+
     public class User
     {
         [Key]
         public int Id { get; set; }
-         
+        public string AspNetUserId { get; set; }
         public string Name { get; set; }
         public string UserName{ get; set; }
         public string EmailAddress { get; set; }
@@ -48,6 +48,9 @@ namespace Nerd.Data
         public string AuthenticationMethod { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Post> Posts{ get; set; }
+
+        public DateTime CreatedDate { get; set; }
+        public bool IsActive { get; set; }
     }
 
 
@@ -60,6 +63,7 @@ namespace Nerd.Data
         public int UserId { get; set; }
         public  string Description { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool Deleted { get; set; }
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
 
@@ -69,6 +73,7 @@ namespace Nerd.Data
     public class Post {
         [Key]
         public int Id { get; set; }
+        public enumPostType PostType { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }
 
@@ -82,5 +87,11 @@ namespace Nerd.Data
 
 
 
+    public enum enumPostType
+    {
+            Text = 0,
+            Photo =1,
+            Video =2
 
+    }
 }
