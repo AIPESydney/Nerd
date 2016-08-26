@@ -37,7 +37,7 @@ namespace Nerd.Data
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+         
         public string Name { get; set; }
         public string UserName{ get; set; }
         public string EmailAddress { get; set; }
