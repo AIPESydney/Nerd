@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201608261058324_UserEntity.Designer.cs">
       <DependentUpon>201608261058324_UserEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608281149481_InformationArchitecture000.cs" />
+    <Compile Include="Migrations\201608281149481_InformationArchitecture000.Designer.cs">
+      <DependentUpon>201608281149481_InformationArchitecture000.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NerdEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +87,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608261058324_UserEntity.resx">
       <DependentUpon>201608261058324_UserEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608281149481_InformationArchitecture000.resx">
+      <DependentUpon>201608281149481_InformationArchitecture000.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

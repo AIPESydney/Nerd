@@ -39,7 +39,44 @@ namespace Nerd.Api.Repository
         }
 
 
+        private GenericRepository<Event> _eventsRepository;
+        public GenericRepository<Event> EventsRepository
+        {
+            get
+            {
+                if (this._eventsRepository == null)
+                {
+                    this._eventsRepository = new GenericRepository<Event>(_context);
+                }
+                return _eventsRepository;
+            }
+        }
 
+        private GenericRepository<Competition> _competitionRepository;
+        public GenericRepository<Competition> CompetitionRepository
+        {
+            get
+            {
+                if (this._competitionRepository == null)
+                {
+                    this._competitionRepository = new GenericRepository<Competition>(_context);
+                }
+                return _competitionRepository;
+            }
+        }
+
+        private GenericRepository<CompetitionEntry> _competitionEntryRepository;
+        public GenericRepository<CompetitionEntry> CompetitionEntryRepository
+        {
+            get
+            {
+                if (this._competitionEntryRepository == null)
+                {
+                    this._competitionEntryRepository = new GenericRepository<CompetitionEntry>(_context);
+                }
+                return _competitionEntryRepository;
+            }
+        }
 
 
         public void Save()
