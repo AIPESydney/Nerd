@@ -193,6 +193,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -328,6 +329,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICacheProvider.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Migrations\201607210952419_InitialCreate.cs" />
     <Compile Include="Migrations\201607210952419_InitialCreate.Designer.cs">
@@ -347,6 +349,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\FacebookAuthenticationProvider.cs" />
     <Compile Include="Providers\GoogleAuthenticationProvider.cs" />
+    <Compile Include="Providers\RuntimeCacheProvider.cs" />
     <Compile Include="Providers\TwitterAuthenticationProvider.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
