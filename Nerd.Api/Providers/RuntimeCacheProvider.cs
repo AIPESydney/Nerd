@@ -9,8 +9,6 @@ namespace Nerd.Api.Providers
     public class RuntimeCacheProvider : ICacheProvider
     {
 
-        [Inject]
-    
         private static readonly ConcurrentDictionary<Type, string> Keys = new ConcurrentDictionary<Type, string>();
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
