@@ -144,7 +144,7 @@ namespace Nerd.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             var user = new ApplicationUser()
             {
                 UserName = model.UserName,
