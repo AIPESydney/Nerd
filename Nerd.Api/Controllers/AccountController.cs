@@ -23,6 +23,8 @@ using System.Globalization;
 using System.Configuration;
 using System.Text;
 using Nerd.Api.Repository;
+using Ninject;
+using Nerd.Api.Cache;
 
 namespace Nerd.Api.Controllers
 {
@@ -38,7 +40,7 @@ namespace Nerd.Api.Controllers
         private ApplicationSignInManager _signInManager;
         private readonly UnitOfWork _unitOfWork;
         private const string LocalLoginProvider = "Local";
-
+        
         public ApplicationUserManager UserManager
         {
             get
@@ -79,6 +81,9 @@ namespace Nerd.Api.Controllers
         //    UserManager = userManager;
 
         //}
+        [Inject]
+        public ICacheManager CacheManager { get; set; }
+
         public AccountController() {
             _unitOfWork = new UnitOfWork();
         }

@@ -7,6 +7,8 @@ namespace Nerd.Data.Migrations
     {
         public override void Up()
         {
+            DropForeignKey("dbo.Comments", "PostId", "dbo.Posts");
+            DropForeignKey("dbo.Comments", "UserId", "dbo.Users");
             CreateTable(
                 "dbo.CompetitionEntries",
                 c => new
@@ -17,8 +19,8 @@ namespace Nerd.Data.Migrations
                         CompetitionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Competitions", t => t.CompetitionId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Competitions", t => t.CompetitionId)
+                .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.CompetitionId);
             
@@ -31,7 +33,7 @@ namespace Nerd.Data.Migrations
                         UserId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId);
             
             CreateTable(
@@ -49,15 +51,19 @@ namespace Nerd.Data.Migrations
                         Tags = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId);
             
             AddColumn("dbo.Users", "Tags", c => c.String());
             AddColumn("dbo.Users", "Interests", c => c.String());
+            AddForeignKey("dbo.Comments", "PostId", "dbo.Posts", "Id");
+            AddForeignKey("dbo.Comments", "UserId", "dbo.Users", "Id");
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Comments", "UserId", "dbo.Users");
+            DropForeignKey("dbo.Comments", "PostId", "dbo.Posts");
             DropForeignKey("dbo.Events", "UserId", "dbo.Users");
             DropForeignKey("dbo.CompetitionEntries", "UserId", "dbo.Users");
             DropForeignKey("dbo.CompetitionEntries", "CompetitionId", "dbo.Competitions");
@@ -71,6 +77,8 @@ namespace Nerd.Data.Migrations
             DropTable("dbo.Events");
             DropTable("dbo.Competitions");
             DropTable("dbo.CompetitionEntries");
+            AddForeignKey("dbo.Comments", "UserId", "dbo.Users", "Id", cascadeDelete: true);
+            AddForeignKey("dbo.Comments", "PostId", "dbo.Posts", "Id", cascadeDelete: true);
         }
     }
 }

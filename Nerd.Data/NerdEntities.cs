@@ -7,7 +7,7 @@ namespace Nerd.Data
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
+    using System.Data.Entity.ModelConfiguration.Conventions;
     public class NerdEntities : DbContext
     {
         // Your context has been configured to use a 'NerdModel' connection string from your application's 
@@ -29,7 +29,14 @@ namespace Nerd.Data
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Post> Post { get; set; }
         public virtual DbSet<Event> Event { get; set; }
-        public virtual DbSet<Competition> CompetitionEntry { get; set; }
+
+        public virtual DbSet<Competition> Competition { get; set; }
+        public virtual DbSet<CompetitionEntry> CompetitionEntry { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
     }
 
 

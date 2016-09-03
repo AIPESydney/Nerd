@@ -13,7 +13,7 @@ namespace Nerd.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201608281149481_InformationArchitecture000"; }
+            get { return "201609030749339_InformationArchitecture000"; }
         }
         
         string IMigrationMetadata.Source

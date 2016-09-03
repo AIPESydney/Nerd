@@ -3,6 +3,8 @@ using System.Linq;
 using Ninject.Modules;
 using Ninject.Extensions.Conventions;
 using Nerd.Api.NinjectInterfaces;
+using Nerd.Api.Interfaces;
+using Nerd.Api.Providers;
 
 namespace Nerd.Api.NinjectInterfaces
 {
@@ -29,6 +31,10 @@ namespace Nerd.Api.NinjectInterfaces
                 .InheritedFrom<IThreadScope>()
                 .BindDefaultInterface()
                 .Configure(conf => conf.InThreadScope()));
+
+            Bind<ICacheProvider>().To<RuntimeCacheProvider>().InSingletonScope();
+
+
         }
     }
 

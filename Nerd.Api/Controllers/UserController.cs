@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity.Owin;
+using Nerd.Api.Cache;
 using Nerd.Api.Models;
 using Nerd.Api.Repository;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,10 @@ namespace Nerd.Api.Controllers
 {
     public class UserController : ApiController
     {
+
+
+        [Inject]
+        public ICacheManager CacheManager { get; set; }
         private readonly UnitOfWork _unitOfWork;
         private ApplicationUserManager _userManager;
         public UserController(UnitOfWork unitOfWork)
