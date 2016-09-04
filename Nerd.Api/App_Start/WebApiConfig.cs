@@ -44,6 +44,10 @@ namespace Nerd.Api
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //Cachecow caching
+            var cacheCow= new CacheCow.Server.CachingHandler(config, "");
+            config.MessageHandlers.Add(cacheCow);
         }
     }
 }
