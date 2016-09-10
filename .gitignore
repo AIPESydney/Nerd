@@ -11,3 +11,4 @@ Nerd.Data/obj/
 *.pdb
 Nerd.Mobile/Nerd.Mobile.csproj.user
 sh.exe.stackdump
+*.rp
