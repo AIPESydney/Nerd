@@ -25,7 +25,7 @@ gulp.task('sass', function(done) {
 
 gulp.task('templatecache', function (done) {
   gulp.src(paths.templatecache)
-    .pipe(templateCache({standalone:true, filename:'views.js', module:'your_app_name.views', root:'views/'}))
+    .pipe(templateCache({standalone:true, filename:'views.js', module:'nerdApp.views', root:'views/'}))
     .pipe(gulp.dest('./www/js/'))
     .on('end', done);
 });
