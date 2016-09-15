@@ -1,5 +1,6 @@
 ﻿using JsonPatch.Formatting;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Nerd.Api
             //Cors Support
             var origins = new List<string>()
                     {    "http://localhost",
-                         "http://localhost:59667"
+                         "http://localhost:59031"
                     };
             var cors = new EnableCorsAttribute(string.Join(",", origins.ToArray()), "*", "GET, POST, OPTIONS, PUT, DELETE");
             config.EnableCors(cors);
@@ -40,14 +41,27 @@ namespace Nerd.Api
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "AccountApi",
+                routeTemplate: "api/account/{id}",
+                defaults: new { id = RouteParameter.Optional },
+                constraints: null
+                );
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional },
+                constraints: null
+                //handler: HttpClientFactory.CreatePipeline(
+                //          new HttpControllerDispatcher(config),
+                //          new DelegatingHandler[] { new ApiKeyHandler("1qaz2wsx3edc4rfv5tgb6yhn") })  // per-route message handler
+                );
 
             //Cachecow caching
             var cacheCow= new CacheCow.Server.CachingHandler(config, "");
             config.MessageHandlers.Add(cacheCow);
+            
+            // removes contract serializable attributes
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver { IgnoreSerializableAttribute = true };
         }
     }
 }

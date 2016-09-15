@@ -38,6 +38,12 @@ namespace Nerd.Api.Repository
         {
             return DbSet.Where(predicate);
         }
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await DbSet.Where(predicate).ToListAsync();
+        }
+
+
         public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await DbSet.Where(predicate).CountAsync();
