@@ -40,7 +40,13 @@ namespace Nerd.Api.Controllers
         private ApplicationSignInManager _signInManager;
         private readonly UnitOfWork _unitOfWork;
         private const string LocalLoginProvider = "Local";
-        
+
+        public enum AuthenticationMethod
+        {
+            Local,
+            Social
+        }
+
         public ApplicationUserManager UserManager
         {
             get
@@ -166,8 +172,12 @@ namespace Nerd.Api.Controllers
 
             var userdata = new Nerd.Data.User
             {
+                UserName = model.UserName,
                 AspNetUserId = user.Id,
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.Now,
+                EmailAddress= model.Email,
+                PhoneNumber=model.PhoneNumber,
+                AuthenticationMethod= AuthenticationMethod.Local.ToString()
             };
 
             await _unitOfWork.UserRepository.InsertAsync(userdata);
@@ -372,8 +382,21 @@ namespace Nerd.Api.Controllers
             {
                 return GetErrorResult(result);
             }
-            var accessTokenResponse = await GenerateLocalAccessTokenResponse(model.Provider, applicationUsername, model.Email, user);
+            
+            var userdata = new Nerd.Data.User
+            {
+                UserName = model.UserName,
+                AspNetUserId = user.Id,
+                CreatedDate = DateTime.Now,
+                EmailAddress = model.Email,
+                AuthenticationMethod = AuthenticationMethod.Local.ToString()
+            };
 
+            await _unitOfWork.UserRepository.InsertAsync(userdata);
+
+
+            //Generate Local Access Token
+            var accessTokenResponse = await GenerateLocalAccessTokenResponse(model.Provider, applicationUsername, model.Email, user);
             return Ok(new
             {
                 UserId = user.Id,
