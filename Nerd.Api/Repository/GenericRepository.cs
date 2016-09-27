@@ -17,6 +17,7 @@ namespace Nerd.Api.Repository
         public GenericRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.Database.Log = (s => System.Diagnostics.Debug.WriteLine(s));
             DbSet = _dbContext.Set<TEntity>();
         }
 
