@@ -17,6 +17,7 @@ namespace Nerd.Api.Repository
         public GenericRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             DbSet = _dbContext.Set<TEntity>();
         }
 
@@ -47,9 +48,10 @@ namespace Nerd.Api.Repository
         public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await DbSet.Where(predicate).CountAsync();
+            
+           
+            
         }
-
-
 
         public virtual async Task EditAsync(TEntity entity)
         {

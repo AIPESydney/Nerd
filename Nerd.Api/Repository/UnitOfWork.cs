@@ -11,6 +11,11 @@ namespace Nerd.Api.Repository
 
         private readonly NerdEntities _context = new NerdEntities();
 
+        public UnitOfWork()
+        {
+            _context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+        }
+
         private GenericRepository<User> _userRepository;
         public GenericRepository<User> UserRepository
         {
@@ -84,6 +89,7 @@ namespace Nerd.Api.Repository
 
             using (var context= new NerdEntities() )
             {
+                context.Database.Log = Console.Write;
                 var user = new User();
             }
             _context.SaveChanges();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -14,6 +15,10 @@ namespace Nerd.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            //new line
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+
             // Web API configuration and services
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
@@ -25,14 +30,12 @@ namespace Nerd.Api
             config.Formatters.Add(new JsonMediaTypeFormatter());
             config.Formatters.Add(new BsonMediaTypeFormatter());
             config.Formatters.Add(new FormUrlEncodedMediaTypeFormatter());
-
-
-
-
+            
             //Cors Support
             var origins = new List<string>()
                     {    "http://localhost",
-                         "http://localhost:59031"
+                         "http://localhost:59031",
+                         "http://192.168.34.70:8100"
                     };
             var cors = new EnableCorsAttribute(string.Join(",", origins.ToArray()), "*", "GET, POST, OPTIONS, PUT, DELETE");
             config.EnableCors(cors);

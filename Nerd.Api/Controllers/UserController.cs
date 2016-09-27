@@ -14,10 +14,11 @@ using System.Web.Http;
 
 namespace Nerd.Api.Controllers
 {
+
+    [Authorize]
     public class UserController : ApiController
     {
-
-
+        
         [Inject]
         public ICacheManager CacheManager { get; set; }
         private readonly UnitOfWork _unitOfWork;
@@ -63,13 +64,44 @@ namespace Nerd.Api.Controllers
             await Task.Delay(1);
             return Ok();
         }
-
+        [System.Web.Http.Route("api/user/getusers")]
         [HttpGet]
         public async Task<IHttpActionResult> GetUsers()
         {
             await Task.Delay(1);
             var users = _unitOfWork.UserRepository.GetAll();
             return Ok(users);
+        }
+
+
+        //Paging concepts
+        [System.Web.Http.Route("api/user/getusersp")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetUsersP(int pageSize, int pageNumber)
+        {
+            try
+            {
+                var totalCount = await _unitOfWork.UserRepository.CountAsync(c => c.IsActive);
+                var totalPages = Math.Ceiling((double)totalCount / pageSize);
+                var query = _unitOfWork.UserRepository.SearchFor(c => c.IsActive).OrderBy(c => c.Id);
+                var user = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                var result = new
+                {
+                    TotalCount = totalCount,
+                    TotalPage = totalPages,
+                    Users = user
+                };
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                //Log exception
+                return InternalServerError(ex);
+            }
+
+
+
+
         }
     }
 }
