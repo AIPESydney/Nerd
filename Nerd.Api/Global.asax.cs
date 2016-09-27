@@ -18,6 +18,9 @@ namespace Nerd.Api
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            WebApiConfig.CompressResponses(GlobalConfiguration.Configuration);
         }
     }
 }

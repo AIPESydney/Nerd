@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Microsoft.AspNet.WebApi.Extensions.Compression.Server;
+using System.Net.Http.Extensions.Compression.Core.Compressors;
 
 namespace Nerd.Api
 {
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -25,6 +28,7 @@ namespace Nerd.Api
             config.Formatters.Add(new JsonMediaTypeFormatter());
             config.Formatters.Add(new BsonMediaTypeFormatter());
             config.Formatters.Add(new FormUrlEncodedMediaTypeFormatter());
+
 
 
 
@@ -63,5 +67,17 @@ namespace Nerd.Api
             // removes contract serializable attributes
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver { IgnoreSerializableAttribute = true };
         }
+
+
+        private const int webApiGzipResponseThresholdBytes = 860;
+        public static void CompressResponses(HttpConfiguration config)
+        {
+            var handler = webApiGzipResponseThresholdBytes>0
+                ? new ServerCompressionHandler(webApiGzipResponseThresholdBytes, new GZipCompressor(), new DeflateCompressor())
+                : new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor());
+            GlobalConfiguration.Configuration.MessageHandlers.Insert(0, handler);
+        }
+
+
     }
 }
